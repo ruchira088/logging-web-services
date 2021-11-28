@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: logging-web-service-service
+  namespace: {{ namespace }}
+spec:
+  selector:
+    app: logging-web-service
+    branch: {{ git_branch }}
+  ports:
+    - name: http4s-port
+      port: 8000
