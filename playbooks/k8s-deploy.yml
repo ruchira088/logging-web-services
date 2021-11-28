@@ -7,13 +7,13 @@
       import_tasks: tasks/git-info.yml
 
     - set_fact:
-        namespace: "{{ 'logging-web-service' if git_branch == 'master' else 'logging-web-service-' + git_branch }}"
+        namespace: "{{ 'logging-web-service' if git_branch == 'main' or git_branch == 'master' else 'logging-web-service-' + git_branch }}"
 
     - name: Render K8s resource files
       import_tasks: tasks/k8s-resource-files.yml
       vars:
-        domain: logging-web-service.dev.ruchij.com
-        hostname: "{{ domain if git_branch == 'master' else git_branch + '.' + domain }}"
+        domain: logging.aws.ruchij.com
+        hostname: "{{ domain if git_branch == 'main' or git_branch == 'master' else git_branch + '.' + domain }}"
 
     - name: Set kube_config
       import_tasks: tasks/k8s-config.yml
