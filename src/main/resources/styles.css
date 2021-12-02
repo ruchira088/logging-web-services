@@ -1,0 +1,27 @@
+#web-socket-container {
+    margin: 2em 1em;
+}
+
+#web-socket-switch-on {
+    background-color: mediumseagreen;
+}
+
+#web-socket-switch-off {
+    background-color: lightgray;
+}
+
+.not-visible {
+    display: none;
+}
+
+.switch {
+    width: 3em;
+    height: 1em;
+    padding: 0.5em;
+    border-radius: 0.1em;
+    text-align: center;
+}
+
+.timestamp {
+    margin: 1em;
+}

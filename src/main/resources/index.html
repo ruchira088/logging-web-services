@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
     <title>Logging Web Service</title>
 </head>
 <body>
     <h1>Logging Web Service</h1>
+    <div id="content">
+        <div id="requests-container">
+        </div>
+        <div id="web-socket-container">
+            <div id="web-socket-switch">
+                <span>WebSocket Connection</span>
+                <span id="web-socket-switch-on" class="not-visible">ON</span>
+                <span id="web-socket-switch-off" class="visible switch">OFF</span>
+            </div>
+        </div>
+        <div id="console-container">
+            <div id="console"></div>
+        </div>
+    </div>
+    <script>
+        window.onload = () => {
+            loadElements(document, fetch)
+        }
+    </script>
 </body>
 </html>

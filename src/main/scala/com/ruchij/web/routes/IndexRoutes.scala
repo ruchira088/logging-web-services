@@ -6,7 +6,7 @@ import org.http4s.{HttpRoutes, Response, StaticFile}
 import org.http4s.dsl.Http4sDsl
 
 object IndexRoutes {
-  val ExposedFileResources: Set[String] =  Set("index.html", "favicon.ico")
+  val ExposedFileResources: Set[String] =  Set("index.html", "favicon.ico", "script.js", "styles.css")
 
   def apply[F[_]: Sync](implicit dsl: Http4sDsl[F]): HttpRoutes[F] = {
     import dsl._

@@ -1,5 +1,6 @@
 package com.ruchij.web.routes
 
+import cats.Applicative
 import cats.effect.kernel.Async
 import cats.implicits._
 import com.ruchij.types.FunctionKTypes._
@@ -11,6 +12,7 @@ import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.websocket.WebSocketBuilder2
 import org.http4s.websocket.WebSocketFrame
+import org.http4s.websocket.WebSocketFrame.Close
 import org.http4s.{HttpRoutes, Request, Response}
 
 import scala.concurrent.duration.DurationInt
@@ -36,7 +38,7 @@ object LoggingRoutes {
         .foldLeft[PartialFunction[Request[F], F[Response[F]]]](PartialFunction.empty) {
           case (routes, (logType, log)) =>
             routes.orElse {
-              case GET -> Root / `logType` =>
+              case (GET | POST) -> Root / `logType` =>
                 log(s"This is a/an $logType message").productR {
                   Ok {
                     ResultResponse(s"${logType.toUpperCase} message has been logged")
@@ -62,11 +64,13 @@ object LoggingRoutes {
                 .metered(1 second),
               input =>
                 input
-                  .evalMap { frame =>
-                    frame.data.decodeUtf8.toType[F, Throwable]
-                  }
-                  .evalMap { message =>
-                    logger.info(s"Received: $message")
+                  .evalMap {
+                    case _: Close => logger.info[F]("WebSocket connection closed")
+
+                    case frame =>
+                      frame.data.decodeUtf8.toType[F, Throwable].flatMap { message =>
+                        logger.info(s"Received: $message")
+                      }
                   }
                   .productR(Stream.empty)
             )
