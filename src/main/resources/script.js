@@ -4,6 +4,8 @@ const createLog =
     (doc, logType, fetchApi) => {
             const button = doc.createElement("button")
             button.innerText = logType.toUpperCase()
+            button.className = `${logType} log-button`
+
             button.addEventListener("click", () => {
                 fetchApi(`/log/${logType}`, { method: "POST" })
                     .then(response => response.json())

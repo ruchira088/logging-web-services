@@ -1,6 +1,5 @@
 package com.ruchij.web.routes
 
-import cats.Applicative
 import cats.effect.kernel.Async
 import cats.implicits._
 import com.ruchij.types.FunctionKTypes._

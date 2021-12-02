@@ -25,3 +25,8 @@
 .timestamp {
     margin: 1em;
 }
+
+.log-button {
+    padding: 0.3em;
+    margin: 0.3em;
+}
