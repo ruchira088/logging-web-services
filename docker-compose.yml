@@ -13,3 +13,4 @@ services:
       - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
       - /var/lib/docker/containers:/var/lib/docker/containers
       - ./fluent-bit/logs:/opt/logs
+      - ./fluent-bit/db:/opt/fluent-bit/db
