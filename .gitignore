@@ -7,5 +7,7 @@ target
 
 .DS_Store
 
+fluent-bit/logs
+
 playbooks/k8s-output
 playbooks/docker-output
