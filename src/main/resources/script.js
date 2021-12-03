@@ -66,7 +66,9 @@ const insertToConsole = (doc, value) => {
 }
 
 const webSocketConnect = doc => {
-    webSocket = new WebSocket(`ws://${doc.location.host}/log/ws`)
+    const protocol = doc.location.protocol.startsWith("https") ? "wss" : "ws"
+
+    webSocket = new WebSocket(`${protocol}://${doc.location.host}/log/ws`)
 
     webSocket.addEventListener("message", ({data}) => insertToConsole(doc, data))
 }
