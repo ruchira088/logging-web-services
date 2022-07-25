@@ -3,9 +3,11 @@ version: "3.8"
 services:
 
   logging-web-service:
-    image: logging-web-service:latest
+    image: ghcr.io/ruchira088/logging-web-service:main
     ports:
       - 8000:8000
+    volumes:
+      - ./src/main/resources/logback.xml:/opt/data/logback.xml
 
   fluent-bit:
     image: fluent/fluent-bit:1.8
