@@ -3,8 +3,10 @@
   connection: local
 
   tasks:
-    - name: Build Docker image
-      import_tasks: tasks/build-docker-prod.yml
+    - name: Install dependencies
+      import_tasks: tasks/install-dependencies.yml
 
-    - name: Publish Docker image
-      import_tasks: tasks/publish-docker-image.yml
+    - name: Build and publish Docker image
+      import_tasks: tasks/build-and-publish-docker-image.yml
+      vars:
+        publish: true
