@@ -4,10 +4,16 @@ services:
 
   logging-web-service:
     image: ghcr.io/ruchira088/logging-web-service:main
+    healthcheck:
+      test: "/opt/scripts/wait-for-it.sh localhost:8000"
+      start_period: 5s
+      interval: 10s
+      timeout: 5s
     ports:
       - 8000:8000
     volumes:
       - ./src/main/resources/logback.xml:/opt/data/logback.xml
+      - ./docker-compose/scripts:/opt/scripts
 
   fluent-bit:
     image: fluent/fluent-bit:1.8
@@ -37,6 +43,6 @@ services:
       - 5601:5601
     depends_on:
       elasticsearch:
-        condition: service_started
+        condition: service_healthy
     environment:
       ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
