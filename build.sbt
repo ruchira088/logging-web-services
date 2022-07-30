@@ -23,6 +23,7 @@ lazy val root =
       topLevelDirectory := None,
       scalacOptions ++= Seq("-Xlint", "-feature", "-Wconf:cat=lint-byname-implicit:s"),
       Universal / javaOptions ++= Seq("-Dlogback.configurationFile=/opt/data/logback.xml"),
+      Compile / unmanagedResourceDirectories += baseDirectory.value / "nginx" / "files",
       addCompilerPlugin(kindProjector),
       addCompilerPlugin(betterMonadicFor)
 )

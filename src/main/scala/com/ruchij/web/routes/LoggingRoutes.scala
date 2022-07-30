@@ -38,7 +38,7 @@ object LoggingRoutes {
           case (routes, (logType, log)) =>
             routes.orElse {
               case (GET | POST) -> Root / `logType` =>
-                log(s"This is a/an $logType message").productR {
+                log(s"Logged $logType message").productR {
                   Ok {
                     ResultResponse(s"${logType.toUpperCase} message has been logged")
                   }
