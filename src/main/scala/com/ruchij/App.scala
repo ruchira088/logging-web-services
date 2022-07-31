@@ -7,6 +7,9 @@ import com.ruchij.web.Routes
 import org.http4s.ember.server.EmberServerBuilder
 import pureconfig.ConfigSource
 
+import scala.concurrent.duration.DurationInt
+import scala.language.postfixOps
+
 object App extends IOApp {
   override def run(args: List[String]): IO[ExitCode] =
     for {
@@ -18,6 +21,7 @@ object App extends IOApp {
       _ <-
         EmberServerBuilder.default[IO]
           .withHttpWebSocketApp(webSocketBuilder => Routes(healthService, webSocketBuilder))
+          .withIdleTimeout(1 hour)
           .withHost(serviceConfiguration.httpConfiguration.host)
           .withPort(serviceConfiguration.httpConfiguration.port)
           .build
