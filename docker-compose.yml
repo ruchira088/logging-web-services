@@ -40,6 +40,7 @@ services:
         condition: service_healthy
     volumes:
       - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf
       - /var/lib/docker/containers:/var/lib/docker/containers
       - ./fluent-bit/logs:/opt/logs
       - ./fluent-bit/db:/opt/fluent-bit/db
@@ -68,19 +69,22 @@ services:
     environment:
       ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
 
-  mongo:
-    image: mongo
-
-  graylog:
-    image: graylog/graylog:4.3
-    ports:
-      - 9000:9000
-      - 1514:1514        # Syslog TCP
-      - 1514:1514/udp    # Syslog UDP
-      - 12201:12201      # GELF TCP
-      - 12201:12201/udp  # GELF UDP
-    environment:
-      GRAYLOG_ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
-      GRAYLOG_MONGODB_URI: "mongodb://mongo:27017/graylog"
-      GRAYLOG_PASSWORD_SECRET: "my-password-secret"
-      GRAYLOG_ROOT_PASSWORD_SHA2: "5d3c54e0f3ef9542edbb9835c9afb77a0538d1b413b976071175ca4434d8ad44" # root-password
+#  mongo:
+#    image: mongo
+#
+#  graylog:
+#    image: graylog/graylog:4.3
+#    ports:
+#      - 9000:9000
+#      - 1514:1514        # Syslog TCP
+#      - 1514:1514/udp    # Syslog UDP
+#      - 12201:12201      # GELF TCP
+#      - 12201:12201/udp  # GELF UDP
+#    depends_on:
+#      elasticsearch:
+#        condition: service_healthy
+#    environment:
+#      GRAYLOG_ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+#      GRAYLOG_MONGODB_URI: "mongodb://mongo:27017/graylog"
+#      GRAYLOG_PASSWORD_SECRET: "my-password-secret"
+#      GRAYLOG_ROOT_PASSWORD_SHA2: "5d3c54e0f3ef9542edbb9835c9afb77a0538d1b413b976071175ca4434d8ad44" # root-password
