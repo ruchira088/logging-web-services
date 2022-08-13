@@ -22,7 +22,7 @@ object App extends IOApp {
 
       healthService = new HealthServiceImpl[IO](serviceConfiguration.buildInformation)
 
-      fiber <- logStream[IO, App.type](logger).metered(250 milliseconds).compile.drain.start
+//      fiber <- logStream[IO, App.type](logger).metered(250 milliseconds).compile.drain.start
 
       _ <- EmberServerBuilder
         .default[IO]
@@ -33,7 +33,7 @@ object App extends IOApp {
         .build
         .use(_ => IO.never)
 
-      _ <- fiber.cancel
+//      _ <- fiber.cancel
     } yield ExitCode.Success
 
   def logStream[F[_]: Sync, A](logger: Logger[A]): Stream[F, Unit] =
